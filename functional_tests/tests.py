@@ -66,6 +66,7 @@ class NewVisitorTest(LiveServerTestCase):
         time.sleep(5)
 
         edith_list_url = self.browser.current_url
+        print (edith_list_url)
         self.assertRegex(edith_list_url,'/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
         
