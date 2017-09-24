@@ -25,6 +25,16 @@ class NewVisitorTest(LiveServerTestCase):
         # to check out its homepage
         self.browser.get(self.live_server_url)
 
+        # at this point, the home.html is rendered in home_page  through the code
+        # 'return render(request, 'home.html')'
+        
+        # print ('Self live server url:', self.live_server_url)
+
+        # edith_list_url = self.browser.current_url
+        # print ('Edith first current URL:', edith_list_url)
+
+        # time.sleep(5)
+
         # She notices the page title and header mention to-do lists
         self.assertIn('To-Do', self.browser.title)
 
@@ -62,11 +72,14 @@ class NewVisitorTest(LiveServerTestCase):
 
         inputbox.send_keys(Keys.ENTER)
 
+        # Once user hits enter, home_page is still resolved and since it is
+        # post action, redirect to list url, and then the list url is resolved to
+        # view_list view, displaying the first item.
         
-        time.sleep(5)
+        time.sleep(1)
 
         edith_list_url = self.browser.current_url
-        print (edith_list_url)
+        # print ('Edith current URL:', edith_list_url)
         self.assertRegex(edith_list_url,'/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
         
@@ -76,17 +89,20 @@ class NewVisitorTest(LiveServerTestCase):
 
 
         inputbox = self.browser.find_element_by_id('id_new_item')
+
+        # The lists url resolved to list.html is used for 2nd input.
+        # The form-data is sent to the page specified in the action attribute "/"
+
+        
         inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
 
 
-        time.sleep(5)
+        time.sleep(1)
         
 
        
         # The page updates again, and now shows both items on her list
-
-
 
 
         self.check_for_row_in_list_table('1: Buy peacock feathers')
@@ -112,9 +128,10 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
-
+        time.sleep(1)
         # Francis gets his own unique URL
         francis_list_url = self.browser.current_url
+        print('Francis current URL:', francis_list_url)
         self.assertRegex(francis_list_url, '/lists/.+')
         self.assertNotEqual(francis_list_url, edith_list_url)
 
