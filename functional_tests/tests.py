@@ -76,7 +76,7 @@ class NewVisitorTest(LiveServerTestCase):
         # post action, redirect to list url, and then the list url is resolved to
         # view_list view, displaying the first item.
         
-        time.sleep(1)
+        time.sleep(2)
 
         edith_list_url = self.browser.current_url
         # print ('Edith current URL:', edith_list_url)
@@ -131,7 +131,7 @@ class NewVisitorTest(LiveServerTestCase):
         time.sleep(1)
         # Francis gets his own unique URL
         francis_list_url = self.browser.current_url
-        print('Francis current URL:', francis_list_url)
+        #print('Francis current URL:', francis_list_url)
         self.assertRegex(francis_list_url, '/lists/.+')
         self.assertNotEqual(francis_list_url, edith_list_url)
 
