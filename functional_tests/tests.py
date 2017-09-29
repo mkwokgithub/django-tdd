@@ -1,4 +1,5 @@
-from django.test import LiveServerTestCase
+import sys
+#from django.test import LiveServerTestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -8,6 +9,22 @@ import unittest
 
 class NewVisitorTest(StaticLiveServerTestCase):
 
+    @classmethod
+    def setUpClass(cls):
+        for arg in sys.argv:
+            if 'liveserver' in arg:
+                cls.server_url = 'http://' + arg.split('=')[1]
+                cls.live_server_url = cls.server_url
+                return
+        super().setUpClass()
+        print (cls.live_server_url)
+        cls.server_url = cls.live_server_url
+
+    @classmethod
+    def tearDownClass(cls):
+        if cls.server_url == cls.live_server_url:
+            super().tearDownClass()
+        
     def setUp(self):
         self.browser = webdriver.Firefox()
  #       self.browser.implicitly_wait(0)
@@ -24,7 +41,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Edith has heard about a cool new online to-do app. She goes
         # to check out its homepage
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
 
         # at this point, the home.html is rendered in home_page  through the code
         # 'return render(request, 'home.html')'
@@ -122,7 +139,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         # Francis visits the home page.  There is no sign of Edith's
         # list
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
 
         time.sleep(2)
         
@@ -167,7 +184,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
     def test_layout_and_styling(self):
         # Edith goes to the home page
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         self.browser.set_window_size(1024, 768)
 
         time.sleep(2)
