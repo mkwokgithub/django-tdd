@@ -1,0 +1,33 @@
+1. Start an app for to-do lists, 'python manage.py startapp lists'
+2. invoke django test runner, 'python manage.py test'
+3. See git difference: git diff
+4. Git comment with comment: git commit -a
+5. Django's ORM tutorial: https://docs.djangoproject.com/en/1.7/intro/tutorial01/
+6. lower level unit tests in lists folder: python3 manage.py test lists
+7.  Get git status:  git status
+8. Add git item:  git add xxx
+9. Git comment with comment online: git commit -m "xxxxxx"
+10. Add tag to git:  git tag end-of-chapter-05
+11. Build physical DB:  python3 manage.py migrate
+12:  page 78: __init__.py is needed for python package(app)
+13. Git move:  git mv  xxx.py   yyy.py
+14.  show git diff after git add for detecting moves:  git diff --staged -M
+15. Git tag: git tag xxx
+16.  ORM modeling DB based on models.py:  python3 manage.py makemigrations
+17.  page 109 reverse lookup:  .item_set
+18.  git commit with comment without using add:  git commit -am xxx
+19.  To avoid using hardcoded 8000 on http: use live_server_url in self.browser.get
+20.  To blows away all uncommitted changes:  git reset --hard
+21.  To install unix like util using brew: brew install xxx
+22.  https://coolestguidesontheplanet.com/installing-homebrew-os-x-yosemite-10-10-package-manager-unix-apps/
+23. bootstrap's docs, LESS, pseudo-CSS-alikes:  http://coding.smashingmagazine.com/2013/03/12/customizing-bootstrap
+24.  git diff ignore white space:  git diff -b
+25. bootstrap doc: http://getbootstrap.com/
+26. code: https://github.com/hjwp/book-example/tree/chapter_03
+27. git add and status for showing diff even after git add: git add .; git status
+28. execute collectstatic noinput: python3 manage.py collectstatic --noinput
+29.  Github accoutn:  mkwokgithub yukkwok99@gmail.com dkue8763j https://github.com/issues
+30.  liveserver option removed:  https://docs.djangoproject.com/en/1.11/releases/1.11/.  Therefore need to uninstall 1.11.x version and re-install 1.10 as venu: pip3 install django=1.10
+31.  For live_server_url issue in chapter 8, see:  https://groups.google.com/forum/#!topic/obey-the-testing-goat-book/pokPKQQB2J8 and https://groups.google.com/forum/#!topic/obey-the-testing-goat-book/L-1oqyDcQIc
+32. git push add remote: git remote add origin https://github.com/mkwokgithub/django-tdd.git
+32. git push: git push -u origin master
