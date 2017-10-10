@@ -34,3 +34,4 @@
 33. VM Vsphere:  https://172.23.192.242/vsphere-client administrator@vsphere.local Nmsc!234 172.23.192.177
 34. restart gunicon: ../virtualenv/bin/gunicorn --bind unix:/tmp/ssat-nms-vm7.cisco.com.socket superlists.wsgi:application
 35. reload nginx: service nginx reload 
+35. Fabric install:  pip3 install fabric3
