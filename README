@@ -35,3 +35,4 @@
 34. restart gunicon: ../virtualenv/bin/gunicorn --bind unix:/tmp/ssat-nms-vm7.cisco.com.socket superlists.wsgi:application
 35. reload nginx: service nginx reload 
 35. Fabric install:  pip3 install fabric3
+36. See git history:  git log --graph --oneline --decorate
