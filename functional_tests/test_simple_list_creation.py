@@ -20,7 +20,7 @@ class NewVisitorTest(FunctionalTest):
         # edith_list_url = self.browser.current_url
         # print ('Edith first current URL:', edith_list_url)
 
-        time.sleep(2)
+        #time.sleep(2)
 
         # She notices the page title and header mention to-do lists
         self.assertIn('To-Do', self.browser.title)
@@ -48,27 +48,23 @@ class NewVisitorTest(FunctionalTest):
 
         inputbox.send_keys('Buy peacock feathers')
 
-        # import time
-        # time.sleep(10)
-
-
-
         # When she hits enter, the page updates, and now the page lists
         # "1: Buy peacock feathers" as an item in a to-do list
 
 
         inputbox.send_keys(Keys.ENTER)
-
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
+        time.sleep(2)
+        
         # Once user hits enter, home_page is still resolved and since it is
         # post action, redirect to list url, and then the list url is resolved to
         # view_list view, displaying the first item.
         
-        time.sleep(2)
 
-        edith_list_url = self.browser.current_url
-        print ('Edith current URL:', edith_list_url)
-        self.assertRegex(edith_list_url,'/lists/.+')
-        self.check_for_row_in_list_table('1: Buy peacock feathers')
+        ##edith_list_url = self.browser.current_url
+        ##print ('Edith current URL:', edith_list_url)
+        ##self.assertRegex(edith_list_url,'/lists/.+')
+        ##self.check_for_row_in_list_table('1: Buy peacock feathers')
         
 
         # There is still a text box inviting her to add another itsm.  She
@@ -81,21 +77,30 @@ class NewVisitorTest(FunctionalTest):
         # The form-data is sent to the page specified in the action attribute "/"
 
         
-        inputbox.send_keys('Use peacock feathers to make a fly')
+        inputbox.send_keys('Use peacock feathers to make a fly\n')
         inputbox.send_keys(Keys.ENTER)
-
-
+        self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
         time.sleep(2)
+
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use peacock feathers to make a dragon')
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('3: Use peacock feathers to make a dragon')
+        time.sleep(2)
+
+        self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
+
         
         edith_list_url = self.browser.current_url
-        print ('Edith current URL:', edith_list_url)
+        #print ('Edith current URL:', edith_list_url)
 
        
         # The page updates again, and now shows both items on her list
 
 
-        self.check_for_row_in_list_table('1: Buy peacock feathers')
-        self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
+        #self.check_for_row_in_list_table('1: Buy peacock feathers')
+        #self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
 
         # Now a new user, Francis, comes along to the site.
@@ -110,7 +115,7 @@ class NewVisitorTest(FunctionalTest):
         # list
         self.browser.get(self.server_url)
 
-        time.sleep(2)
+        # time.sleep(2)
         
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
@@ -121,7 +126,7 @@ class NewVisitorTest(FunctionalTest):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
-        
+        self.wait_for_row_in_list_table('1: Buy milk')
         time.sleep(2)
         
         # Francis gets his own unique URL
