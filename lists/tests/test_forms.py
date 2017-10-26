@@ -1,5 +1,5 @@
 from django.test import TestCase
-from lists.forms import ItemForm
+from lists.forms import EMPTY_LIST_ERROR, ItemForm
 
 
 class ItemFormTest(TestCase):
@@ -16,6 +16,6 @@ class ItemFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(
             form.errors['text'],
-            ["You can't have an empty list item"]
+            [EMPTY_LIST_ERROR]
         )
         #form.save()
