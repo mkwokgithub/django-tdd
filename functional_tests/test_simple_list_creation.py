@@ -32,7 +32,7 @@ class NewVisitorTest(FunctionalTest):
         self.assertIn('To-Do', header_text)
         
         # She is invited to enter a to-do item straight away
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         self.assertEqual(
             inputbox.get_attribute('placeholder'),
             'Enter a to-do item'
@@ -71,7 +71,7 @@ class NewVisitorTest(FunctionalTest):
         # enters "Use peacock feathers to make a fly" (Edith is very methodical)
 
 
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
 
         # The lists url resolved to list.html is used for 2nd input.
         # The form-data is sent to the page specified in the action attribute "/"
@@ -82,7 +82,7 @@ class NewVisitorTest(FunctionalTest):
         self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
         time.sleep(2)
 
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Use peacock feathers to make a dragon')
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('3: Use peacock feathers to make a dragon')
@@ -123,7 +123,7 @@ class NewVisitorTest(FunctionalTest):
 
         # Francis starts a new list by entering a new item. He
         # is less interesting than Edith ...
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: Buy milk')
