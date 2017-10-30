@@ -36,3 +36,5 @@
 35. reload nginx: service nginx reload 
 35. Fabric install:  pip3 install fabric3
 36. See git history:  git log --graph --oneline --decorate
+37.  about with: http://preshing.com/20110920/the-python-with-statement-by-example/
+38.  for lamda:  http://www.secnetix.de/olli/Python/lambda_functions.hawk

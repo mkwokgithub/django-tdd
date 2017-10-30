@@ -60,6 +60,20 @@ class FunctionalTest(StaticLiveServerTestCase):
                 time.sleep(0.5)
 
 
+    def wait_for_has_error_in_css_selector(self):
+        start_time = time.time()
+        while True:
+            try:
+                error = self.browser.find_element_by_css_selector('.has-error')
+                self.assertEqual(error.text, "You've already got this in your list")
+                return
+            except (AssertionError, WebDriverException) as e:
+                if time.time() - start_time > MAX_WAIT:
+                    raise e
+                time.sleep(0.5)
+
+
+
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
