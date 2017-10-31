@@ -54,7 +54,7 @@ class NewVisitorTest(FunctionalTest):
 
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
-        time.sleep(2)
+ #      time.sleep(2)
         
         # Once user hits enter, home_page is still resolved and since it is
         # post action, redirect to list url, and then the list url is resolved to
@@ -80,13 +80,13 @@ class NewVisitorTest(FunctionalTest):
         inputbox.send_keys('Use peacock feathers to make a fly\n')
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
-        time.sleep(2)
+ #      time.sleep(2)
 
         inputbox = self.get_item_input_box()
         inputbox.send_keys('Use peacock feathers to make a dragon')
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('3: Use peacock feathers to make a dragon')
-        time.sleep(2)
+ #       time.sleep(2)
 
         self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
@@ -127,7 +127,7 @@ class NewVisitorTest(FunctionalTest):
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: Buy milk')
-        time.sleep(2)
+ #      time.sleep(2)
         
         # Francis gets his own unique URL
         francis_list_url = self.browser.current_url
