@@ -65,8 +65,8 @@ class FunctionalTest(StaticLiveServerTestCase):
         while True:
             try:
                 error = self.browser.find_element_by_css_selector('.has-error')
-                self.assertEqual(error.text, "You've already got this in your list")
-                return
+                # self.assertEqual(error.text, "You've already got this in your list")
+                return error
             except (AssertionError, WebDriverException) as e:
                 if time.time() - start_time > MAX_WAIT:
                     raise e
