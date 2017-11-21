@@ -27,14 +27,24 @@
 27. git add and status for showing diff even after git add: git add .; git status
 28. execute collectstatic noinput: python3 manage.py collectstatic --noinput
 29.  Github accoutn:  mkwokgithub yukkwok99@gmail.com dkue8763j https://github.com/issues
-30.  liveserver option removed:  https://docs.djangoproject.com/en/1.11/releases/1.11/.  Therefore need to uninstall 1.11.x version and re-install 1.10 as venu: pip3 install django=1.10
+30.  liveserver option removed:  https://docs.djangoproject.com/en/1.11/releases/1.11/.  Therefore need to uninstall 1.11.x version and re-install 1.10 as venu or virtualenv mode (in ubuntu-mkwok): pip3 install django=1.10
 31.  For live_server_url issue in chapter 8, see:  https://groups.google.com/forum/#!topic/obey-the-testing-goat-book/pokPKQQB2J8 and https://groups.google.com/forum/#!topic/obey-the-testing-goat-book/L-1oqyDcQIc
 32. git push add remote: git remote add origin https://github.com/mkwokgithub/django-tdd.git
 32. git push: git push -u origin master
 33. VM Vsphere:  https://172.23.192.242/vsphere-client administrator@vsphere.local Nmsc!234 172.23.192.177
 34. restart gunicon: ../virtualenv/bin/gunicorn --bind unix:/tmp/ssat-nms-vm7.cisco.com.socket superlists.wsgi:application
-35. reload nginx: service nginx reload 
+35. start/reload nginx: service nginx start;service nginx reload
+	a. install nginx: apt-get install nginx (linux) 
 35. Fabric install:  pip3 install fabric3
 36. See git history:  git log --graph --oneline --decorate
 37.  about with: http://preshing.com/20110920/the-python-with-statement-by-example/
 38.  for lamda:  http://www.secnetix.de/olli/Python/lambda_functions.hawk
+39. install virtualenv on linux:  pip3 install virtualenv
+40. test functional_tests on book writer's staging machine: python3 manage.py test functional_tests --liveserver=superlists-staging.ottg.eu
+41. test functional_tests again ssat-nms-vm7.cisco.com, follow item 40 and replace superlists-staging.ottg.eu by ssat-nms-vm7.cisco.com
+42. Build physical DB without input: python3 manage.py migrate --noinput
+43. Steps to install and setup virtualenv on ssat-nms-vm7 as ubuntu-mkwok user:
+	a. install virtualenv: sudo  pip3 install virtualenv
+	b. setup virtualenv for "virtualenv" folder of sites/ssat-nms-vm7.cisco.com:  virtualenv --python=python3 ../virtualenv
+	c. source activate:  source ../virtualenv/bin/activate
+  
