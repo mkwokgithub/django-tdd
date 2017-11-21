@@ -47,4 +47,10 @@
 	a. install virtualenv: sudo  pip3 install virtualenv
 	b. setup virtualenv for "virtualenv" folder of sites/ssat-nms-vm7.cisco.com:  virtualenv --python=python3 ../virtualenv
 	c. source activate:  source ../virtualenv/bin/activate
-  
+44.  Steps to get code onto the server:
+	a. ssh to ubuntu-mkwok; cd /home/ubuntu-mkwok/sites
+	b. export SITENAME=ssat-nms-vm7.cisco.com
+	c. mkdir -p ~/sites/$SITENAME/database  
+	d. mkdir -p ~/sites/$SITENAME/static  
+	e. mkdir -p ~/sites/$SITENAME/virtualenv
+	f. git clone https://github.com/mkwokgithub/django-tdd.git ~/sites/$SITENAME/source  
