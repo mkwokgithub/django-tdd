@@ -55,4 +55,70 @@
 	e. mkdir -p ~/sites/$SITENAME/virtualenv
 	f. git clone https://github.com/mkwokgithub/django-tdd.git ~/sites/$SITENAME/source 
 	g. setup virtualenv (show in above)
-	h. install django 1.10 (shown in above) as virtualenv mode 
+	h. install django 1.10 (shown in above) as virtualenv mode
+
+45. Steps to collect needed packages for virtualenv:
+	a. in virtualenv mode, pip3 freeze > requirement.txt
+46. Steps to recreate needed package for virtualenv:
+	a. In virtualenv mode, pip3 install -r requirement.txt 
+
+47. Steps to configure nginx to proxy incoming requests to other destination where the django will respond.
+	a. edit file /etc/nginx/sites-available/ssat-nms-vm7.cisco.com as the following:
+
+
+server {
+	listen 80;  #nginx listens to port 80
+        ## listen [::]:80;
+
+	server_name ssat-nms-vm7.cisco.com;
+
+	## root /var/www/example.com;
+	## index index.html;
+
+
+	location /static {
+		alias /home/ubuntu-mkwok/sites/ssat-nms-vm7.cisco.com/static;
+	}
+
+	location / {
+		proxy_set_header Host $host;
+		proxy_pass http://unix:/tmp/ssat-nms-vm7.cisco.com.socket;	
+		## proxy_pass http://localhost:8000;  # nginx proxy all requests
+ to local port 8000 where it expect Django waiting to respond to requests
+	}
+}
+
+	b. create a soft link to link the above file to a file name in /etc/nginx/sites-enable:  ln -s /etc/nginx/sites-available/ssat-nms-vm7.cisco.com  /etc/nginx/sites-enabled/ssat-nms-vm7.cisco.com
+	c. need to remove /etc/nginx/sites-enabled/default
+	d. reload nginx:  service nginx reload
+
+48. What is the difference between nginx and gunicorn:
+	a. Nginx is a web server and reverse-proxy responsible for serving static content, gzip compression, ssl, proxy_buffers and other HTTP stuff 
+	b. gunicorn is a Python HTTP server that interfaces with both nginx and your actual python web-app code to serve dynamic content.
+	c. Read https://www.quora.com/What-are-the-differences-between-nginx-and-gunicorn
+49. Start up gunicorn with path to WSGI server (included in wsgi.py of superlists):
+	a. ../virtualenv/bin/gunicorn superlists.wsgi:application
+
+50. Getting nginx to server static files:
+	a. edit /etc/nginx/sites-available/ssat-nms-vm7.cisco.com  to add the following:
+			location /static {
+		alias /home/ubuntu-mkwok/sites/ssat-nms-vm7.cisco.com/static;
+	}
+	b. collect static:  ../virtualenv/bin/python3 manage.py collectstatic --noinput
+	c. reload nginx:  sudo service nginx reload
+	d. restart gunicorn with path to wsgi application:  ../virtualenv/bin/gunicorn superlists.wsgi:application
+
+51. Configure nginx and gunicorn to use unix domain sockets, and so we an avoid port 8000:
+	a. add the following to /etc/nginx/sites-available/ssat-nms-vm7.cisco.com :
+
+	location / {
+		proxy_set_header Host $host;
+		proxy_pass http://unix:/tmp/ssat-nms-vm7.cisco.com.socket;	
+	}
+	b. config gunicorn to listen to socket:
+		sudo service nginx reload
+		../virtualenv/bin/gunicorn --bind unix:/tmp/ssat-nms-vm7.cisco.com.socket superlists.wsgi:application
+
+52.  Create DB on deployment server:  ../virtualenv/bin/python3 manage.py migrate --noinput
+
+53.  turn off DEBUG and config ALLOWED_HOSTS in superlists/settings.py.  Then restart gunicorn 
