@@ -121,4 +121,10 @@ server {
 
 52.  Create DB on deployment server:  ../virtualenv/bin/python3 manage.py migrate --noinput
 
-53.  turn off DEBUG and config ALLOWED_HOSTS in superlists/settings.py.  Then restart gunicorn 
+53.  turn off DEBUG and config ALLOWED_HOSTS in superlists/settings.py.  Then restart gunicorn
+
+54.  Create automatic deployment enviroment:
+	a. install fabric (see above)
+	b. create file fabfile.py in deploy_tools/ folder
+	c. cd deploy_tools and run: fab deploy:host=ubuntu-mkwok@ssat-nms-vm7.cisco.com  (will ask pwd which is lablab)
+	d. you can rerun the above command if there is new stuff in githube 
