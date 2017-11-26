@@ -128,3 +128,5 @@ server {
 	b. create file fabfile.py in deploy_tools/ folder
 	c. cd deploy_tools and run: fab deploy:host=ubuntu-mkwok@ssat-nms-vm7.cisco.com  (will ask pwd which is lablab)
 	d. you can rerun the above command if there is new stuff in githube 
+55. For spike info, please check ../spike/ folder
+56. to checkout passwordless-spike: git checkout passwordles-spike
