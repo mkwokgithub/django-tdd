@@ -130,3 +130,32 @@ server {
 	d. you can rerun the above command if there is new stuff in githube 
 55. For spike info, please check ../spike/ folder
 56. to checkout passwordless-spike: git checkout passwordless-spike
+57. test functional_tests on ubuntu-mkwok staging machine: python3 manage.py test functional_tests --liveserver=ssat-nms-vm7.cisco.com
+58. Use systemctl to auto start gunicorn on server:
+
+	1. in /etc/systemd/system/gunicorn-ssat-nms-vm7.cisco.com.service:
+
+[Unit]
+Description=Gunicorn server for ssat-nms-vm7.cisco.com 
+
+[Service]
+Restart=on-failure  
+User=ubuntu-mkwok  
+WorkingDirectory=/home/ubuntu-mkwok/sites/ssat-nms-vm7.cisco.com/source 
+ExecStart=/home/ubuntu-mkwok/sites/ssat-nms-vm7.cisco.com/virtualenv/bin/gunicorn \
+    --bind unix:/tmp/ssat-nms-vm7.cisco.com.socket \
+    superlists.wsgi:application  
+
+[Install]
+WantedBy=multi-user.target 
+
+	2. as ubunti-mkwok user, do the following:
+
+sudo systemctl daemon-reload
+sudo systemctl enable gunicorn-ssat-nms-vm7.cisco.com
+sudo systemctl start gunicorn-ssat-nms-vm7.cisco.com
+
+	3. troubleshooting gunicorn service:
+
+sudo journalctl -u gunicorn-ssat-nms-vm7.cisco.com
+ 
