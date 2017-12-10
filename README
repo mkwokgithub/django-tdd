@@ -144,6 +144,8 @@ User=ubuntu-mkwok
 WorkingDirectory=/home/ubuntu-mkwok/sites/ssat-nms-vm7.cisco.com/source 
 ExecStart=/home/ubuntu-mkwok/sites/ssat-nms-vm7.cisco.com/virtualenv/bin/gunicorn \
     --bind unix:/tmp/ssat-nms-vm7.cisco.com.socket \
+    --access-logfile access.log \
+    --error-logfile error.log \
     superlists.wsgi:application  
 
 [Install]
@@ -153,7 +155,7 @@ WantedBy=multi-user.target
 
 sudo systemctl daemon-reload
 sudo systemctl enable gunicorn-ssat-nms-vm7.cisco.com
-sudo systemctl start gunicorn-ssat-nms-vm7.cisco.com
+sudo systemctl start (restart) gunicorn-ssat-nms-vm7.cisco.com
 
 	3. troubleshooting gunicorn service:
 
