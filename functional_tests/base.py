@@ -30,8 +30,10 @@ class FunctionalTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.staging_server = os.environ.get('STAGING_SERVER')
+        print('staging_server: ', self.staging_server)
         if self.staging_server:
             self.live_server_url = 'http://' + self.staging_server
+            print('live_server_url: ', self.live_server_url)
  #       self.browser.implicitly_wait(0)
 
     def tearDown(self):
