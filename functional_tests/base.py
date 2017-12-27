@@ -1,3 +1,4 @@
+import os
 import sys
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
@@ -28,6 +29,9 @@ class FunctionalTest(StaticLiveServerTestCase):
         
     def setUp(self):
         self.browser = webdriver.Firefox()
+        self.staging_server = os.environ.get('STAGING_SERVER')
+        if self.staging_server:
+            self.live_server_url = 'http://' + self.staging_server
  #       self.browser.implicitly_wait(0)
 
     def tearDown(self):
