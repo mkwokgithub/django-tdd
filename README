@@ -151,7 +151,7 @@ ExecStart=/home/ubuntu-mkwok/sites/ssat-nms-vm7.cisco.com/virtualenv/bin/gunicor
 [Install]
 WantedBy=multi-user.target 
 
-	2. as ubunti-mkwok user, do the following:
+	2. as ubuntu-mkwok user, do the following:
 
 sudo systemctl daemon-reload
 sudo systemctl enable gunicorn-ssat-nms-vm7.cisco.com
