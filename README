@@ -160,4 +160,17 @@ sudo systemctl start (restart) gunicorn-ssat-nms-vm7.cisco.com
 	3. troubleshooting gunicorn service:
 
 sudo journalctl -u gunicorn-ssat-nms-vm7.cisco.com
- 
+
+
+59.  Steps to setup linux for staging:
+
+	1. download ubuntu iso (version 17 amd 64 bit server)  from  http://rtp-linux.cisco.com/ubuntu-releases
+	2. Use VMWare Fusion on Mac, pick the iso and give a user name such as ubuntu-mkwok with pwd "lablab".  Then config 2 cpu and 4G memory.  Then VMWare will use easy way to create the VM.
+	3. Config /etc/hostname to have hostname as "ubuntu-mkwok". and config /etc/hosts to add entry to give FQDN hostname.
+	 http://rtp-linux.cisco.com/ubuntu-releases
+	4. add pwd for root user:  login as "ubuntu-mkwok", then "sudo su - root", then "passwd root" to set root pwd.  Then install openssh-server as root:  apt-get install openssh-server.
+	5. Edit /etc/sshd/sshd_config, with "PermitRootLogin yes".  Then restart ssh:  systemctl restart ssh
+	6. Install and config nginx as root user: Step 35 and 47
+	7. Install few required packages:    "apt-get install nginx git python3 python3-pip",  "pip3 install virtualenv"
+        8. Set up gunicorn auto start service: follow step 58
+	9. use "fab" to deploy to staging server. The deployment will install gunicorn if it is not installed.   and then use step 58 to setup gunicorn restart service.
