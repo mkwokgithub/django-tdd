@@ -20,6 +20,7 @@ class loginTest(FunctionalTest):
         # It's telling her to enter her email address, so she does
         if self.staging_server:
             test_email = 'kwokyukming@yahoo.com'
+            #test_email = 'mkwokdjango@gmail.com'
         else:
             test_email = 'edith@example.com'
             
@@ -35,7 +36,6 @@ class loginTest(FunctionalTest):
             self.browser.find_element_by_tag_name('body').text
         ))
 
-        time.sleep(5)
 
         # She checks her email and finds a message
         #email = mail.outbox[0]
@@ -80,13 +80,21 @@ class loginTest(FunctionalTest):
         email_id = None
         start = time.time()
         inbox = poplib.POP3_SSL('pop.mail.yahoo.com')
+        #inbox = poplib.POP3_SSL('pop.googlemail.com')
         try:
+            print('yahoo pwd: ', os.environ['YAHOO_PASSWORD'])
+            print('test email: ', test_email)
             inbox.user(test_email)
             inbox.pass_(os.environ['YAHOO_PASSWORD'])
+            #inbox.pass_(os.environ['EMAIL_PASSWORD'])
+            print('gmail pwd: ', os.environ['EMAIL_PASSWORD'])
             subjectstr = 'Subject: {}'
+            print('hello 1')
             while time.time() - start < 60:
+                print('hello 2')
                 # get 10 newest messages
                 count, _ = inbox.stat()
+                print('count: ', count)
                 for i in reversed(range(max(1, count - 10), count + 1)):
                     print('getting msg', i)
                     _, lines, __ = inbox.retr(i)
@@ -95,8 +103,10 @@ class loginTest(FunctionalTest):
                     if subjectstr.format(subject) in lines:
                         email_id = i
                         body = '\n'.join(lines)
+                        print('hello 3')
                         return body
                 time.sleep(5)
+                print(' hello \n')
         finally:
             if email_id:
                 inbox.dele(email_id)
