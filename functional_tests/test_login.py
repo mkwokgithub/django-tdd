@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 import os
 import poplib
 import re
@@ -19,8 +20,9 @@ class loginTest(FunctionalTest):
         # and notices a "Log in" section in the navbar for the first time
         # It's telling her to enter her email address, so she does
         if self.staging_server:
-            test_email = 'kwokyukming@yahoo.com'
+            #test_email = 'kwokyukming@yahoo.com'
             #test_email = 'mkwokdjango@gmail.com'
+            test_email = os.environ['TEST_EMAIL']
         else:
             test_email = 'edith@example.com'
             
@@ -69,6 +71,19 @@ class loginTest(FunctionalTest):
         #self.wait_to_be_logged_out(email=TEST_EMAIL)
         self.wait_to_be_logged_out(email=test_email)
 
+
+
+    @contextmanager
+    def pop_inbox(self, test_email):
+        try:
+            inbox = poplib.POP3_SSL(os.environ['TEST_POP_SERVER'])
+            inbox.user(test_email)
+            inbox.pass_(os.environ['TEST_PASSWORD'])
+            yield inbox
+    
+        finally:
+            inbox.quit()
+
         
     def wait_for_email(self, test_email, subject):
         if not self.staging_server:
@@ -77,10 +92,34 @@ class loginTest(FunctionalTest):
             self.assertEqual(email.subject, subject)
             return email.body
 
+        last_count = 0
+        start = time.time()
+
+        subjectstr = 'Subject: {}'
+    
+        while time.time() - start < 60:
+            with self.pop_inbox(test_email) as inbox:
+                count, _ = inbox.stat()
+                if count != last_count:
+                    for i in range(count, last_count, -1):
+                        _, lines, __ = inbox.retr(i)
+                        lines = [l.decode('utf8') for l in lines]
+                        if subjectstr.format(subject) in lines:
+                            inbox.dele(i)
+                            return '\n'.join(lines)
+                    last_count = count
+            time.sleep(5)
+
+                        
+                    
+                    
+ 
+
+'''
         email_id = None
         start = time.time()
         inbox = poplib.POP3_SSL('pop.mail.yahoo.com')
-        #inbox = poplib.POP3_SSL('pop.googlemail.com')
+        #inbox = poplib.POP3_SSL('pop.gmail.com')
         try:
             print('yahoo pwd: ', os.environ['YAHOO_PASSWORD'])
             print('test email: ', test_email)
@@ -107,15 +146,15 @@ class loginTest(FunctionalTest):
                         return body
                 time.sleep(5)
                 print(' hello \n')
+
         finally:
             if email_id:
                 inbox.dele(email_id)
             inbox.quit()
-                        
-                        
-                    
-                    
-                          
+
+                
+'''
+                         
 
                       
         
