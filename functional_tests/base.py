@@ -1,3 +1,4 @@
+from .server_tools import reset_database
 import os
 import sys
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -34,6 +35,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         if self.staging_server:
             self.live_server_url = 'http://' + self.staging_server
             print('live_server_url: ', self.live_server_url)
+            reset_database(self.staging_server)
  #       self.browser.implicitly_wait(0)
 
     def tearDown(self):
