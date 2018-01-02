@@ -43,6 +43,7 @@ class loginTest(FunctionalTest):
         #email = mail.outbox[0]
         #self.assertIn(TEST_EMAIL, email.to)
         #self.assertEqual(email.subject, SUBJECT)
+        print('test_email: ', test_email)
         body = self.wait_for_email(test_email, SUBJECT)
 
         # It has a url link in it
@@ -96,7 +97,7 @@ class loginTest(FunctionalTest):
         start = time.time()
 
         subjectstr = 'Subject: {}'
-    
+        print('hello ...')
         while time.time() - start < 60:
             with self.pop_inbox(test_email) as inbox:
                 count, _ = inbox.stat()
