@@ -24,7 +24,8 @@ class loginTest(FunctionalTest):
             #test_email = 'mkwokdjango@gmail.com'
             test_email = os.environ['TEST_EMAIL']
         else:
-            test_email = 'edith@example.com'
+            #test_email = 'edith@example.com'
+            test_email = os.environ['TEST_EMAIL']
             
         self.browser.get(self.live_server_url)
         print(' current live server url', self.live_server_url)
@@ -87,17 +88,18 @@ class loginTest(FunctionalTest):
 
         
     def wait_for_email(self, test_email, subject):
-        if not self.staging_server:
-            email = mail.outbox[0]
-            self.assertIn(test_email, email.to)
-            self.assertEqual(email.subject, subject)
-            return email.body
+        #if not self.staging_server:
+        #    print('no staging server')
+        #    email = mail.outbox[0]
+        #    self.assertIn(test_email, email.to)
+        #    self.assertEqual(email.subject, subject)
+        #    return email.body
 
         last_count = 0
         start = time.time()
 
         subjectstr = 'Subject: {}'
-        print('hello ...')
+        print('hello ..hello hello hello.')
         while time.time() - start < 60:
             with self.pop_inbox(test_email) as inbox:
                 count, _ = inbox.stat()
