@@ -174,3 +174,4 @@ sudo journalctl -u gunicorn-ssat-nms-vm7.cisco.com
 	7. Install few required packages:    "apt-get install nginx git python3 python3-pip",  "pip3 install virtualenv"
         8. Set up gunicorn auto start service: follow step 58
 	9. use "fab" to deploy to staging server. The deployment will install gunicorn if it is not installed.   and then use step 58 to setup gunicorn restart service.
+60.  after checkout the older revision and want to go back to the head: git checkout master
